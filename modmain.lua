@@ -517,7 +517,7 @@ end
 -- This is the only spot where the list of items is called.
 -- The passed "item" seems to be an object in the inventory.
 -- At each elif, check if the "item" passed matches one of the prefab names in the group. 
--- Don't know what actual_item is yet, but the index represents each of the item types. For example, index 2 represents axes. 
+-- Don't know what actual_item is yet, but the index represents each of the item types. For example, index 2 represents axes. I assume acutal_item is the item it has chosen to be selected. 
 -- Hypothesis: Only one item is selected becasue these are elif statements. If they were changed to "If" statements, then if an item is listed in multiple groups, it can get chosen twice. 
 local function CheckButtonItem(item)
 	if (item.prefab == "multitool_axe_pickaxe" or item.prefab == "gears_multitool") then
@@ -525,35 +525,33 @@ local function CheckButtonItem(item)
 		ChangeButtonIcon(2,actual_item[2])
 		actual_item[3] = GetBestItem(actual_item[3],item,pickaxes)
 		ChangeButtonIcon(3,actual_item[3])
-	end
-	if (IsInGroup(item,axes)) then
-		actual_item[2] = GetBestItem(actual_item[2],item,axes)
-		ChangeButtonIcon(2,actual_item[2])
-	end
-	if (IsInGroup(item,scythes)) then
-		actual_item[12] = GetBestItem(actual_item[12],item,scythes)
-		ChangeButtonIcon(12,actual_item[12])
-	end
-	if (IsInGroup(item,pickaxes)) then
-		actual_item[3] = GetBestItem(actual_item[3],item,pickaxes)
-		ChangeButtonIcon(3,actual_item[3])
-	end
-	if (IsInGroup(item,shovels)) then
-		actual_item[4] = GetBestItem(actual_item[4],item,shovels)
-		ChangeButtonIcon(4,actual_item[4])
-	end
-	if (item.prefab == "hammer") then
+	elseif (item.prefab == "hammer") then
 		actual_item[5] = GetBestItemNoGroup(actual_item[5],item)
 		ChangeButtonIcon(5,actual_item[5])
-	end
-	if (item.prefab == "pitchfork") then
+	elseif (IsInGroup(item,helmets)) then
+		actual_item[9] = GetBestItem(actual_item[9],item,helmets)
+		ChangeButtonIcon(9,actual_item[9])
+	elseif (IsInGroup(item,axes)) then
+		actual_item[2] = GetBestItem(actual_item[2],item,axes)
+		ChangeButtonIcon(2,actual_item[2])
+	elseif (IsInGroup(item,pickaxes)) then
+		actual_item[3] = GetBestItem(actual_item[3],item,pickaxes)
+		ChangeButtonIcon(3,actual_item[3])
+	elseif (IsInGroup(item,shovels)) then
+		actual_item[4] = GetBestItem(actual_item[4],item,shovels)
+		ChangeButtonIcon(4,actual_item[4])
+	elseif (IsInGroup(item,rweapons)) then
+		actual_item[11] = GetBestItem(actual_item[11],item,rweapons)
+		ChangeButtonIcon(11,actual_item[11])
+	elseif (IsInGroup(item,scythes)) then
+		actual_item[12] = GetBestItem(actual_item[12],item,scythes)
+		ChangeButtonIcon(12,actual_item[12])
+	elseif (item.prefab == "pitchfork") then
 		actual_item[6] = GetBestItemNoGroup(actual_item[6],item)
 		ChangeButtonIcon(6,actual_item[6])
 	end
-	if (IsInGroup(item,lights)) then
-		actual_item[7] = GetBestItem(actual_item[7],item,lights)
-		ChangeButtonIcon(7,actual_item[7])
-	end
+
+	-- These groups contain items in multiple categories. 
 	if (IsInGroup(item,canes)) then
 		actual_item[10] = GetBestItem(actual_item[10],item,canes)
 		ChangeButtonIcon(10,actual_item[10])
@@ -562,17 +560,13 @@ local function CheckButtonItem(item)
 		actual_item[1] = GetBestItem(actual_item[1],item,weapons)
 		ChangeButtonIcon(1,actual_item[1])
 	end
-	if (IsInGroup(item,rweapons)) then
-		actual_item[11] = GetBestItem(actual_item[11],item,rweapons)
-		ChangeButtonIcon(11,actual_item[11])
-	end
 	if (IsInGroup(item,armors)) then
 		actual_item[8] = GetBestItem(actual_item[8],item,armors)
 		ChangeButtonIcon(8,actual_item[8])
 	end
-	if (IsInGroup(item,helmets)) then
-		actual_item[9] = GetBestItem(actual_item[9],item,helmets)
-		ChangeButtonIcon(9,actual_item[9])
+	if (IsInGroup(item,lights)) then
+		actual_item[7] = GetBestItem(actual_item[7],item,lights)
+		ChangeButtonIcon(7,actual_item[7])
 	end
 end
 

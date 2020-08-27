@@ -524,40 +524,52 @@ local function CheckButtonItem(item)
 		ChangeButtonIcon(2,actual_item[2])
 		actual_item[3] = GetBestItem(actual_item[3],item,pickaxes)
 		ChangeButtonIcon(3,actual_item[3])
-	elseif (IsInGroup(item,axes)) then
+	end
+	if (IsInGroup(item,axes)) then
 		actual_item[2] = GetBestItem(actual_item[2],item,axes)
 		ChangeButtonIcon(2,actual_item[2])
-	elseif (IsInGroup(item,scythes)) then
+	end
+	if (IsInGroup(item,scythes)) then
 		actual_item[12] = GetBestItem(actual_item[12],item,scythes)
 		ChangeButtonIcon(12,actual_item[12])
-	elseif (IsInGroup(item,pickaxes)) then
+	end
+	if (IsInGroup(item,pickaxes)) then
 		actual_item[3] = GetBestItem(actual_item[3],item,pickaxes)
 		ChangeButtonIcon(3,actual_item[3])
-	elseif (IsInGroup(item,shovels)) then
+	end
+	if (IsInGroup(item,shovels)) then
 		actual_item[4] = GetBestItem(actual_item[4],item,shovels)
 		ChangeButtonIcon(4,actual_item[4])
-	elseif (item.prefab == "hammer") then
+	end
+	if (item.prefab == "hammer") then
 		actual_item[5] = GetBestItemNoGroup(actual_item[5],item)
 		ChangeButtonIcon(5,actual_item[5])
-	elseif (item.prefab == "pitchfork") then
+	end
+	if (item.prefab == "pitchfork") then
 		actual_item[6] = GetBestItemNoGroup(actual_item[6],item)
 		ChangeButtonIcon(6,actual_item[6])
-	elseif (IsInGroup(item,lights)) then
+	end
+	if (IsInGroup(item,lights)) then
 		actual_item[7] = GetBestItem(actual_item[7],item,lights)
 		ChangeButtonIcon(7,actual_item[7])
-	elseif (IsInGroup(item,canes)) then
+	end
+	if (IsInGroup(item,canes)) then
 		actual_item[10] = GetBestItem(actual_item[10],item,canes)
 		ChangeButtonIcon(10,actual_item[10])
-	elseif (IsInGroup(item,weapons)) then
+	end
+	if (IsInGroup(item,weapons)) then
 		actual_item[1] = GetBestItem(actual_item[1],item,weapons)
 		ChangeButtonIcon(1,actual_item[1])
-	elseif (IsInGroup(item,rweapons)) then
+	end
+	if (IsInGroup(item,rweapons)) then
 		actual_item[11] = GetBestItem(actual_item[11],item,rweapons)
 		ChangeButtonIcon(11,actual_item[11])
-	elseif (IsInGroup(item,armors)) then
+	end
+	if (IsInGroup(item,armors)) then
 		actual_item[8] = GetBestItem(actual_item[8],item,armors)
 		ChangeButtonIcon(8,actual_item[8])
-	elseif (IsInGroup(item,helmets)) then
+	end
+	if (IsInGroup(item,helmets)) then
 		actual_item[9] = GetBestItem(actual_item[9],item,helmets)
 		ChangeButtonIcon(9,actual_item[9])
 	end

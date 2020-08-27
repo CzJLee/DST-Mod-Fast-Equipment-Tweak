@@ -35,13 +35,32 @@ local KEYS = {
 }
 if RANGED then
 	table.insert(KEYS, KEY_RANGED)
+else 
+	table.insert(KEYS, false)
 end
 
 if SUPPORT_SCYTHES then
-	if (RANGED ~= true) then
-		table.insert(KEYS, false)
-	end
 	table.insert(KEYS, KEY_SCYTHE)
+else 
+	table.insert(KEYS, false)
+end
+
+SUPPORT_PANFOOD = true
+-- "\" key
+KEY_PANFOOD = 92
+if SUPPORT_PANFOOD then
+	table.insert(KEYS, KEY_PANFOOD)
+else 
+	table.insert(KEYS, false)
+end
+
+SUPPORT_CANESWAP = true
+-- "]" key
+KEY_CANESWAP = 93
+if SUPPORT_CANESWAP then	
+	table.insert(KEYS, KEY_CANESWAP)
+else 
+	table.insert(KEYS, false)
 end
 
 local Player
@@ -93,15 +112,17 @@ local default_icon = {
 	"footballhat",
 	"cane",
 	"boomerang",
-	"scythe"
+	"scythe",
+	"panfood", -- Adding the category requires this to be added, or else it crashes. I think it has something to do with how it resets categories.
+	"caneswap"
 }
 
 local weapons = {
 	"glasscutter",
 	"cutlass",
 	"nightsword",
+	"hambat", -- I want hambat to have a higher priority than Thulecite Club.
 	"ruins_bat",
-	"hambat",
 	"spear_obsidian",
 	"tentaclespike",
 	"nightstick",
@@ -267,6 +288,12 @@ local pitchfork = {
 	"fishingrod"
 }
 
+local panfood = {
+	"panflute",
+	"meatballs",
+	"boomerang"
+}
+
 Assets = {
 	Asset("ATLAS", "images/basic_back.xml"),
 	Asset("IMAGE", "images/basic_back.tex"),
@@ -403,31 +430,47 @@ local function IsInItemGroup(item,group)
 end
 
 local function EquipItem(index)
-	if (actual_item[index]) then
-		local equiped_item
-		if (index == 7) then
-			equiped_item = Player.replica.inventory:GetEquippedItem("hands")
-			if (equiped_item == nil or equiped_item.prefab ~= actual_item[index].prefab) then
-				equiped_item = Player.replica.inventory:GetEquippedItem("head")
-			end
-		elseif (index == 8) then
-			equiped_item = Player.replica.inventory:GetEquippedItem("body")
-		elseif (index == 9) then
-			equiped_item = Player.replica.inventory:GetEquippedItem("head")
-		else
-			equiped_item = Player.replica.inventory:GetEquippedItem("hands")
+	local equiped_item
+	if (index == 14) then
+		equiped_item = Player.replica.inventory:GetEquippedItem("hands")
+		-- If the currently equiped item is the best cane, equip the best weapon. 
+		if (equiped_item == actual_item[10]) then
+			Player.replica.inventory:UseItemFromInvTile(actual_item[1])
+		-- Else if the currently equiped item is the best weapon, equip the best cane. 
+		elseif (equiped_item == actual_item[1]) then
+			Player.replica.inventory:UseItemFromInvTile(actual_item[10])
+		-- Else if the currently equiped item is not the best cane or best weapon...
+		elseif (equiped_item ~= actual_item[10] and equiped_item ~= actual_item[1]) then
+			-- Then equip the cane. 
+			Player.replica.inventory:UseItemFromInvTile(actual_item[10])
 		end
-		-- If there is currently nothing equiped, or the best item is not the currently equiped item...
-		if (equiped_item == nil or actual_item[index].prefab ~= equiped_item.prefab) then
-			-- Then equip the best item.
-			Player.replica.inventory:UseItemFromInvTile(actual_item[index])
-			--Player.replica.inventory:Equip(actual_item[index],nil)
-		-- Else if the best item is currently equiped
-		elseif (actual_item[index].prefab == equiped_item.prefab) then
-			-- Then unequip the item.
-			local active_item = Player.replica.inventory:GetActiveItem()
-			if (not(index == 8 and active_item and active_item.prefab == "torch")) then
-				Player.replica.inventory:UseItemFromInvTile(equiped_item)
+	else
+		if (actual_item[index]) then
+			if (index == 7) then
+				equiped_item = Player.replica.inventory:GetEquippedItem("hands")
+				if (equiped_item == nil or equiped_item.prefab ~= actual_item[index].prefab) then
+					equiped_item = Player.replica.inventory:GetEquippedItem("head")
+				end
+			elseif (index == 8) then
+				equiped_item = Player.replica.inventory:GetEquippedItem("body")
+			elseif (index == 9) then
+				equiped_item = Player.replica.inventory:GetEquippedItem("head")
+			else
+				equiped_item = Player.replica.inventory:GetEquippedItem("hands")
+			end
+
+			-- If there is currently nothing equiped, or the best item is not the currently equiped item...
+			if (equiped_item == nil or actual_item[index].prefab ~= equiped_item.prefab) then
+				-- Then equip the best item.
+				Player.replica.inventory:UseItemFromInvTile(actual_item[index])
+				--Player.replica.inventory:Equip(actual_item[index],nil)
+			-- Else if the best item is currently equiped
+			elseif (actual_item[index].prefab == equiped_item.prefab) then
+				-- Then unequip the item.
+				local active_item = Player.replica.inventory:GetActiveItem()
+				if (not(index == 8 and active_item and active_item.prefab == "torch")) then
+					Player.replica.inventory:UseItemFromInvTile(equiped_item)
+				end
 			end
 		end
 	end
@@ -507,11 +550,12 @@ local function GetBestItem(item1,item2,group)
 			return item2
 		else
 			-- Pick the item with less durability
-			local winner_item = CompareItems(item1,item2) 
+			local winner_item = CompareItems(item1,item2)
+			-- GLOBAL.TheNet:Say("I am comparing item1: "..tostring(item1)..", and item2: "..tostring(item2),true)
 			if (winner_item) then
 				return winner_item
 			else
-				return item1
+				return item2 -- Change to item2 to not alternate the same item. 
 			end
 		end
 	end
@@ -591,6 +635,10 @@ local function CheckButtonItem(item)
 	elseif (IsInGroup(item,pitchfork)) then
 		actual_item[6] = GetBestItem(actual_item[6],item,pitchfork)
 		ChangeButtonIcon(6,actual_item[6])
+	elseif (IsInGroup(item,panfood)) then
+		GLOBAL.TheNet:Say("actual_item[13] is: "..tostring(actual_item[13])..", item is: "..tostring(item),true)
+		actual_item[13] = GetBestItem(actual_item[13],item,panfood)
+		-- ChangeButtonIcon(13,actual_item[13])
 	elseif (IsInGroup(item,scythes)) then
 		actual_item[12] = GetBestItem(actual_item[12],item,scythes)
 		ChangeButtonIcon(12,actual_item[12])
@@ -970,9 +1018,10 @@ if (DISABLE_KEYS == false or KEY_REFRESH ~= false) then
 	function KeyHandler(pkey, down)
 		if not GLOBAL.IsPaused() and IsDefaultScreen() then
 			if down then
-				GLOBAL.TheNet:Say("pkey is: "..tostring(pkey),true)
+				-- GLOBAL.TheNet:Say("pkey is: "..tostring(pkey),ttrue)
 				for i,key in pairs(KEYS) do
-					if key == pkey then 
+					if key == pkey then
+						-- GLOBAL.TheNet:Say("index is: "..tostring(i),true)
 						EquipItem(i)
 					end
 				end

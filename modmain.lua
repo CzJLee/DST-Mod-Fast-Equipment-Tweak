@@ -57,8 +57,17 @@ end
 SUPPORT_CANESWAP = true
 -- "]" key
 KEY_CANESWAP = 93
-if SUPPORT_CANESWAP then	
+if SUPPORT_CANESWAP then
 	table.insert(KEYS, KEY_CANESWAP)
+else 
+	table.insert(KEYS, false)
+end
+
+SUPPORT_HEALS = true
+-- "[" key
+KEY_HEALS = 91
+if SUPPORT_HEALS then
+	table.insert(KEYS, KEY_HEALS)
 else 
 	table.insert(KEYS, false)
 end
@@ -114,7 +123,8 @@ local default_icon = {
 	"boomerang",
 	"scythe",
 	"panfood", -- Adding the category requires this to be added, or else it crashes. I think it has something to do with how it resets categories.
-	"caneswap"
+	"caneswap",
+	"heals"
 }
 
 local weapons = {
@@ -292,6 +302,11 @@ local panfood = {
 	"panflute",
 	"meatballs",
 	"boomerang"
+}
+
+local heals = {
+	"dragonpie",
+	"perogies"
 }
 
 Assets = {
@@ -635,10 +650,6 @@ local function CheckButtonItem(item)
 	elseif (IsInGroup(item,pitchfork)) then
 		actual_item[6] = GetBestItem(actual_item[6],item,pitchfork)
 		ChangeButtonIcon(6,actual_item[6])
-	elseif (IsInGroup(item,panfood)) then
-		GLOBAL.TheNet:Say("actual_item[13] is: "..tostring(actual_item[13])..", item is: "..tostring(item),true)
-		actual_item[13] = GetBestItem(actual_item[13],item,panfood)
-		-- ChangeButtonIcon(13,actual_item[13])
 	elseif (IsInGroup(item,scythes)) then
 		actual_item[12] = GetBestItem(actual_item[12],item,scythes)
 		ChangeButtonIcon(12,actual_item[12])
@@ -660,6 +671,14 @@ local function CheckButtonItem(item)
 	if (IsInGroup(item,lights)) then
 		actual_item[7] = GetBestItem(actual_item[7],item,lights)
 		ChangeButtonIcon(7,actual_item[7])
+	end
+	if (IsInGroup(item,panfood)) then
+		actual_item[13] = GetBestItem(actual_item[13],item,panfood)
+		-- ChangeButtonIcon(13,actual_item[13])
+	end
+	if (IsInGroup(item,heals)) then
+		actual_item[15] = GetBestItem(actual_item[15],item,heals)
+		-- ChangeButtonIcon(15,actual_item[15])
 	end
 end
 

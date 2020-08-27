@@ -163,7 +163,8 @@ local scythes = {
 
 local canes = {
 	"orangestaff",
-	"cane"
+	"cane",
+	"ruins_bat"
 }
 
 local armors = {
@@ -221,8 +222,8 @@ local lights = {
 	"redlantern",
 	"tarlamp",
 	"torch",
-	"lighter"
---	"yellowamulet"
+	"lighter",
+	"yellowamulet"
 }
 
 Assets = {

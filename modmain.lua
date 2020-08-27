@@ -197,6 +197,7 @@ local helmets = {
 	"wathgrithrhat",
 	"oxhat",
 	"hat_wood",
+	"beehat",
 	"footballhat"
 }
 
@@ -224,6 +225,46 @@ local lights = {
 	"torch",
 	"lighter",
 	"yellowamulet"
+}
+
+local pitchfork = {
+	"pitchfork",
+	"oar",
+	"oar_driftwood",
+	"malbatross_beak",
+	"purpleamulet,",
+	"eyebrellahat",
+	"umbrella",
+	"beefalohat",
+	"deserthat",
+	"mermhat",
+	"blueamulet",
+	"featherhat",
+	"winterhat",
+	"earmuffshat",
+	"rainhat",
+	"catcoonhat",
+	"icehat",
+	"watermelonhat",
+	"bushhat",
+	"blue_mushroomhat",
+	"green_mushroomhat",
+	"red_mushroomhat",
+	"beargervest",
+	"trunkvest_winter",
+	"raincoat",
+	"hawaiianshirt",
+	"trunkvest_summer",
+	"sweatervest",
+	"reflectivevest",
+	"reskin_tool",
+	"armorslurper",
+	"amulet",
+	"tophat",
+	"flowerhat",
+	"strawhat",
+	"oceanfishingrod",
+	"fishingrod"
 }
 
 Assets = {
@@ -376,10 +417,14 @@ local function EquipItem(index)
 		else
 			equiped_item = Player.replica.inventory:GetEquippedItem("hands")
 		end
+		-- If there is currently nothing equiped, or the best item is not the currently equiped item...
 		if (equiped_item == nil or actual_item[index].prefab ~= equiped_item.prefab) then
+			-- Then equip the best item.
 			Player.replica.inventory:UseItemFromInvTile(actual_item[index])
 			--Player.replica.inventory:Equip(actual_item[index],nil)
+		-- Else if the best item is currently equiped
 		elseif (actual_item[index].prefab == equiped_item.prefab) then
+			-- Then unequip the item.
 			local active_item = Player.replica.inventory:GetActiveItem()
 			if (not(index == 8 and active_item and active_item.prefab == "torch")) then
 				Player.replica.inventory:UseItemFromInvTile(equiped_item)
@@ -543,12 +588,12 @@ local function CheckButtonItem(item)
 	elseif (IsInGroup(item,rweapons)) then
 		actual_item[11] = GetBestItem(actual_item[11],item,rweapons)
 		ChangeButtonIcon(11,actual_item[11])
+	elseif (IsInGroup(item,pitchfork)) then
+		actual_item[6] = GetBestItem(actual_item[6],item,pitchfork)
+		ChangeButtonIcon(6,actual_item[6])
 	elseif (IsInGroup(item,scythes)) then
 		actual_item[12] = GetBestItem(actual_item[12],item,scythes)
 		ChangeButtonIcon(12,actual_item[12])
-	elseif (item.prefab == "pitchfork") then
-		actual_item[6] = GetBestItemNoGroup(actual_item[6],item)
-		ChangeButtonIcon(6,actual_item[6])
 	end
 
 	-- These groups contain items in multiple categories. 
@@ -920,11 +965,12 @@ local function IsDefaultScreen()
 	end
 end
 
-
+-- Boolian is confusing, DISABLE_KEYS == false means that keybinds are active. 
 if (DISABLE_KEYS == false or KEY_REFRESH ~= false) then
 	function KeyHandler(pkey, down)
 		if not GLOBAL.IsPaused() and IsDefaultScreen() then
 			if down then
+				GLOBAL.TheNet:Say("pkey is: "..tostring(pkey),true)
 				for i,key in pairs(KEYS) do
 					if key == pkey then 
 						EquipItem(i)

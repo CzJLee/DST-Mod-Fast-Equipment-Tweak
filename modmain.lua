@@ -63,14 +63,14 @@ else
 	table.insert(KEYS, false)
 end
 
-SUPPORT_HEALS = true
--- "[" key
-KEY_HEALS = 91
-if SUPPORT_HEALS then
-	table.insert(KEYS, KEY_HEALS)
-else 
-	table.insert(KEYS, false)
-end
+-- SUPPORT_HEALS = true
+-- -- "[" key
+-- KEY_HEALS = 91
+-- if SUPPORT_HEALS then
+-- 	table.insert(KEYS, KEY_HEALS)
+-- else 
+-- 	table.insert(KEYS, false)
+-- end
 
 local Player
 local Widget = GLOBAL.require("widgets/widget")
@@ -124,7 +124,7 @@ local default_icon = {
 	"scythe",
 	"panfood", -- Adding the category requires this to be added, or else it crashes. I think it has something to do with how it resets categories.
 	"caneswap",
-	"heals"
+	-- "heals"
 }
 
 local weapons = {
@@ -300,8 +300,33 @@ local pitchfork = {
 
 local panfood = {
 	"panflute",
+	"rock_avocado_fruit_ripe_cooked",
+	"rock_avocado_fruit_ripe",
+	"berries_juicy _cooked",
+	"berries_cooked",
+	"carrot_cooked",
+	"cave_banana_cooked",
+	"cave_banana",
+	"turkeydinner",
+	"dragonpie",
 	"meatballs",
-	"boomerang"
+	"bonestew",
+	"baconeggs",
+	"honeyham",
+	"smallmeat",
+	"cookedsmall_meat",
+	"smallmeat_dried",
+	"meat_dried",
+	"cookedmeat",
+	"cutlichen",
+	"trunk_cooked",
+	"honey",
+	"froglegs_cooked",
+	"bird_egg_cooked",
+	"butterflywings",
+	"berries_juicy",
+	"carrot",
+	"berries"
 }
 
 local heals = {
@@ -676,10 +701,10 @@ local function CheckButtonItem(item)
 		actual_item[13] = GetBestItem(actual_item[13],item,panfood)
 		-- ChangeButtonIcon(13,actual_item[13])
 	end
-	if (IsInGroup(item,heals)) then
-		actual_item[15] = GetBestItem(actual_item[15],item,heals)
-		-- ChangeButtonIcon(15,actual_item[15])
-	end
+	-- if (IsInGroup(item,heals)) then
+	-- 	actual_item[15] = GetBestItem(actual_item[15],item,heals)
+	-- 	-- ChangeButtonIcon(15,actual_item[15])
+	-- end
 end
 
 local function ClearButtonItem(index)

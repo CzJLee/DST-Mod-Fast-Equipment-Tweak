@@ -122,9 +122,9 @@ local default_icon = {
 	"cane",
 	"boomerang",
 	"scythe",
-	"panfood", -- Adding the category requires this to be added, or else it crashes. I think it has something to do with how it resets categories.
-	"caneswap",
-	-- "heals"
+	"panflute", -- (panfood) Adding the category requires this to be added, or else it crashes. I think it has something to do with how it resets categories.
+	"cane", -- (cane swap)
+	-- ""healingsalve"" -- (heals)
 }
 
 local weapons = {

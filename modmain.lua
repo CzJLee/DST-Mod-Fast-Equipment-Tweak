@@ -263,10 +263,12 @@ local pitchfork = {
 	"oar",
 	"oar_driftwood",
 	"malbatross_beak",
-	"purpleamulet,",
+	"purpleamulet",
+	"batnosehat", -- Milkmade Hat
 	"eyebrellahat",
 	"umbrella",
 	"beefalohat",
+	"walrushat",
 	"deserthat",
 	"mermhat",
 	"blueamulet",

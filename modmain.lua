@@ -260,9 +260,13 @@ local lights = {
 
 local pitchfork = {
 	"pitchfork",
+	"golden_farm_hoe",
+	"farm_hoe",
+	"premiumwateringcan",
+	"wateringcan",
+	"malbatross_beak",
 	"oar",
 	"oar_driftwood",
-	"malbatross_beak",
 	"purpleamulet",
 	"batnosehat", -- Milkmade Hat
 	"eyebrellahat",
@@ -297,7 +301,9 @@ local pitchfork = {
 	"flowerhat",
 	"strawhat",
 	"oceanfishingrod",
-	"fishingrod"
+	"fishingrod",
+	"nutrientsgoggleshat",
+	"plantregistryhat"
 }
 
 local panfood = {

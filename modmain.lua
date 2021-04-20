@@ -306,35 +306,8 @@ local pitchfork = {
 	"plantregistryhat"
 }
 
-local panfood = {
-	"panflute",
-	"rock_avocado_fruit_ripe_cooked",
-	"rock_avocado_fruit_ripe",
-	"berries_juicy _cooked",
-	"berries_cooked",
-	"carrot_cooked",
-	"cave_banana_cooked",
-	"cave_banana",
-	"turkeydinner",
-	"dragonpie",
-	"meatballs",
-	"bonestew",
-	"baconeggs",
-	"honeyham",
-	"smallmeat",
-	"cookedsmall_meat",
-	"smallmeat_dried",
-	"meat_dried",
-	"cookedmeat",
-	"cutlichen",
-	"trunk_cooked",
-	"honey",
-	"froglegs_cooked",
-	"bird_egg_cooked",
-	"butterflywings",
-	"berries_juicy",
-	"carrot",
-	"berries"
+local panflute = {
+	"panflute"
 }
 
 local heals = {
@@ -705,8 +678,8 @@ local function CheckButtonItem(item)
 		actual_item[7] = GetBestItem(actual_item[7],item,lights)
 		ChangeButtonIcon(7,actual_item[7])
 	end
-	if (IsInGroup(item,panfood)) then
-		actual_item[13] = GetBestItem(actual_item[13],item,panfood)
+	if (IsInGroup(item,panflute)) then
+		actual_item[13] = GetBestItem(actual_item[13],item,panflute)
 		-- ChangeButtonIcon(13,actual_item[13])
 	end
 	-- if (IsInGroup(item,heals)) then
